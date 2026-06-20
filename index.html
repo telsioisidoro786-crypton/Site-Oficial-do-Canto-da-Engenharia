@@ -1,0 +1,2039 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canto da Engenharia — Um universo, várias visões!</title>
+  <meta name="description" content="Movimento juvenil que aplica a engenharia ao desenvolvimento social das comunidades de Luanda." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+  /* ============================================================
+     DESIGN TOKENS
+  ============================================================ */
+  :root {
+    /* Base — Light mode */
+    --bg:          #FFFFFF;
+    --bg-soft:     #F8F8F8;
+    --bg-mid:      #F2F2F2;
+    --text:        #111111;
+    --text-mid:    #444444;
+    --text-muted:  #888888;
+    --border:      #E5E5E5;
+    --border-dark: #CCCCCC;
+
+    /* Brand gradient (do logo) */
+    --grad-start:  #E91E8C;   /* rosa */
+    --grad-mid1:   #F05A28;   /* laranja */
+    --grad-mid2:   #F7A800;   /* amarelo */
+    --grad-end:    #8B2FC9;   /* roxo */
+
+    --grad: linear-gradient(135deg, var(--grad-start) 0%, var(--grad-mid1) 35%, var(--grad-mid2) 65%, var(--grad-end) 100%);
+    --grad-text: linear-gradient(90deg, var(--grad-start), var(--grad-mid1), var(--grad-mid2));
+
+    /* Tipografia */
+    --font-d: 'Poppins', sans-serif;
+    --font-b: 'Lato', sans-serif;
+
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* ============================================================
+     RESET
+  ============================================================ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-b);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { cursor: pointer; border: none; background: none; font: inherit; }
+
+  /* ============================================================
+     UTILITIES
+  ============================================================ */
+  .container { width: min(1160px, 100% - 2.5rem); margin-inline: auto; }
+
+  .grad-text {
+    background: var(--grad-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-d);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--grad-mid1);
+    padding: 0.3em 0.9em;
+    border: 1.5px solid rgba(240,90,40,0.25);
+    border-radius: 100px;
+  }
+  .tag::before {
+    content: '';
+    display: block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--grad);
+    flex-shrink: 0;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* Section spacing */
+  .section { padding: 6rem 0; }
+  .section-sm { padding: 4rem 0; }
+
+  .section-label { margin-bottom: 1.2rem; }
+  .section-title {
+    font-family: var(--font-d);
+    font-weight: 900;
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    margin-bottom: 1.2rem;
+  }
+  .section-body {
+    font-size: 1.05rem;
+    color: var(--text-mid);
+    line-height: 1.8;
+    max-width: 560px;
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ============================================================
+     NAV
+  ============================================================ */
+  #navbar {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 100;
+    padding: 1rem 0;
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  #navbar.scrolled {
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 1px 0 var(--border);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  /* Logo */
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-family: var(--font-d);
+    font-weight: 900;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+  .nav-logo-icon {
+    width: 32px; height: 32px;
+    flex-shrink: 0;
+  }
+  .nav-logo-text span { display: block; }
+  .nav-logo-text .l1 {
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .nav-logo-text .l2 {
+    font-size: 1rem;
+    font-weight: 900;
+    line-height: 1.1;
+    background: var(--grad-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.8rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-mid);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    font-family: var(--font-d);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.6em 1.5em;
+    background: var(--grad);
+    color: #fff;
+    border-radius: 100px;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: 4px;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px; height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.3s;
+  }
+
+  .nav-mobile {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+  .nav-mobile.open { display: flex; }
+  .nav-mobile a {
+    font-family: var(--font-d);
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text);
+  }
+  .nav-mobile a:hover { background: var(--grad-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .nav-mobile-close {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    font-family: var(--font-d);
+    font-weight: 300;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links, .nav-cta { display: none; }
+    .nav-hamburger { display: flex; }
+  }
+
+  /* ============================================================
+     HERO
+  ============================================================ */
+  #hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    background: var(--bg);
+    overflow: hidden;
+  }
+
+  /* Gradient blob de fundo suave */
+  .hero-blob {
+    position: absolute;
+    top: -10%;
+    right: -5%;
+    width: 55vw;
+    max-width: 700px;
+    aspect-ratio: 1;
+    background: conic-gradient(from 135deg, rgba(233,30,140,0.08), rgba(240,90,40,0.06), rgba(247,168,0,0.08), rgba(139,47,201,0.06), rgba(233,30,140,0.08));
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+  }
+  .hero-blob-2 {
+    position: absolute;
+    bottom: -10%;
+    left: -5%;
+    width: 40vw;
+    max-width: 500px;
+    aspect-ratio: 1;
+    background: conic-gradient(from 0deg, rgba(247,168,0,0.06), rgba(233,30,140,0.05), rgba(139,47,201,0.06));
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+  }
+
+  #hero-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding-top: 5rem;
+    max-width: 780px;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-title {
+    font-family: var(--font-d);
+    font-weight: 900;
+    font-size: clamp(2.6rem, 6.5vw, 5.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 1.6rem;
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    color: var(--text-mid);
+    max-width: 500px;
+    line-height: 1.8;
+    margin-bottom: 2.8rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .btn-grad {
+    font-family: var(--font-d);
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.9em 2.2em;
+    background: var(--grad);
+    color: #fff;
+    border-radius: 100px;
+    transition: opacity 0.2s, transform 0.2s var(--ease);
+    display: inline-block;
+  }
+  .btn-grad:hover { opacity: 0.88; transform: translateY(-2px); }
+
+  .btn-outline {
+    font-family: var(--font-d);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.9em 2.2em;
+    border: 1.5px solid var(--border-dark);
+    color: var(--text-mid);
+    border-radius: 100px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--grad-mid1); color: var(--text); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    z-index: 2;
+  }
+  .hero-scroll span {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .scroll-track {
+    width: 1px; height: 36px;
+    background: var(--border-dark);
+    position: relative;
+    overflow: hidden;
+  }
+  .scroll-track::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 50%;
+    background: var(--grad);
+    animation: scroll-drop 1.8s ease-in-out infinite;
+  }
+  @keyframes scroll-drop {
+    0%   { transform: translateY(-100%); }
+    100% { transform: translateY(200%); }
+  }
+
+  /* Hero logo visual (right) */
+  .hero-logo-visual {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    opacity: 0.08;
+    width: min(400px, 45vw);
+    pointer-events: none;
+  }
+  @media (max-width: 900px) { .hero-logo-visual { display: none; } }
+
+  /* ============================================================
+     SOBRE
+  ============================================================ */
+  #sobre { background: var(--bg-soft); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .about-img-wrap {
+    position: relative;
+    aspect-ratio: 4/5;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--bg-mid);
+  }
+  .about-img-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--grad);
+    opacity: 0.07;
+    z-index: 1;
+  }
+  .about-img-placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .about-img-placeholder svg { width: 80px; height: 80px; opacity: 0.18; }
+
+  /* Badge sobre a imagem */
+  .about-badge {
+    position: absolute;
+    bottom: -1.5rem;
+    right: -1.5rem;
+    padding: 1.2rem 1.5rem;
+    background: var(--grad);
+    color: #fff;
+    border-radius: 6px;
+    z-index: 2;
+    box-shadow: 0 8px 32px rgba(233,30,140,0.2);
+  }
+  .about-badge strong {
+    display: block;
+    font-family: var(--font-d);
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .about-badge span {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+
+  .about-text { padding: 1.5rem 0; }
+  .about-values {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-top: 2rem;
+  }
+  .value-item {
+    padding: 1.1rem 1.2rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg);
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .value-item:hover {
+    border-color: rgba(240,90,40,0.3);
+    box-shadow: 0 4px 16px rgba(233,30,140,0.06);
+  }
+  .value-item h4 {
+    font-family: var(--font-d);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+    background: var(--grad-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .value-item p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .about-badge { right: 0; bottom: -1rem; }
+  }
+
+  /* ============================================================
+     PILARES
+  ============================================================ */
+  #pilares { background: var(--bg); }
+
+  .section-header {
+    text-align: center;
+    max-width: 580px;
+    margin: 0 auto 3.5rem;
+  }
+  .section-header .section-label { justify-content: center; display: flex; }
+
+  /* 2 cards institucionais (cinza) + 2 cards de acção (gradiente) */
+  .pilares-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .pilar-card {
+    border-radius: 10px;
+    padding: 2.6rem 2.2rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s;
+  }
+  .pilar-card:hover { transform: translateY(-5px); }
+
+  /* Institucional: fundo claro */
+  .pilar-card.light {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+  }
+  .pilar-card.light:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.07); }
+  .pilar-card.light h3 { color: var(--text); }
+  .pilar-card.light p  { color: var(--text-mid); }
+
+  /* Acção: gradiente do logo */
+  .pilar-card.vibrant {
+    background: var(--grad);
+    color: #fff;
+  }
+  .pilar-card.vibrant:hover { box-shadow: 0 16px 48px rgba(233,30,140,0.25); }
+  .pilar-card.vibrant h3 { color: #fff; }
+  .pilar-card.vibrant p  { color: rgba(255,255,255,0.82); }
+
+  .pilar-num {
+    position: absolute;
+    top: 1.5rem; right: 1.8rem;
+    font-family: var(--font-d);
+    font-size: 5rem;
+    font-weight: 900;
+    line-height: 1;
+    opacity: 0.06;
+    user-select: none;
+    color: currentColor;
+  }
+
+  .pilar-icon {
+    width: 44px; height: 44px;
+    margin-bottom: 1.4rem;
+    display: block;
+    flex-shrink: 0;
+  }
+  .pilar-icon svg { width: 100%; height: 100%; }
+  .pilar-card h3 {
+    font-family: var(--font-d);
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 0.7rem;
+    position: relative;
+  }
+  .pilar-card p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    position: relative;
+  }
+
+  /* Linha de cor nos cards institucionais */
+  .pilar-card.light::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--grad);
+  }
+
+  /* Card grande (full-width) */
+  .pilar-card.wide {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: center;
+    padding: 2rem 2.4rem;
+  }
+  .pilar-card.wide .pilar-icon { font-size: 2.5rem; margin-bottom: 0; }
+
+  @media (max-width: 640px) {
+    .pilares-grid { grid-template-columns: 1fr; }
+    .pilar-card.wide { grid-column: auto; grid-template-columns: 1fr; gap: 1rem; }
+  }
+
+  /* ============================================================
+     STATS BAR
+  ============================================================ */
+  .stats-bar {
+    background: var(--grad);
+    padding: 3.5rem 0;
+  }
+  .stats-inner {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  .stat-item { text-align: center; color: #fff; }
+  .stat-number {
+    font-family: var(--font-d);
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1;
+    color: #fff;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-top: 0.4rem;
+  }
+
+  /* ============================================================
+     GOVERNAÇÃO
+  ============================================================ */
+  #governacao { background: var(--bg-soft); }
+
+  .gov-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: end;
+    margin-bottom: 3rem;
+  }
+  .gov-desc { color: var(--text-mid); font-size: 1rem; line-height: 1.8; }
+
+  .dept-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .dept-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.8rem;
+    background: var(--bg);
+    transition: transform 0.3s var(--ease), box-shadow 0.3s, border-color 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .dept-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.07);
+    border-color: rgba(240,90,40,0.2);
+  }
+  .dept-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--grad);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s var(--ease);
+  }
+  .dept-card:hover::after { transform: scaleX(1); }
+
+  /* Card principal destaque */
+  .dept-card.featured {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    background: var(--grad);
+    border: none;
+    color: #fff;
+  }
+  .dept-card.featured::after { display: none; }
+  .dept-card.featured:hover { box-shadow: 0 16px 48px rgba(233,30,140,0.2); }
+  .dept-card.featured h3 { color: #fff; font-size: 1.1rem; }
+  .dept-card.featured p  { color: rgba(255,255,255,0.82); }
+  .dept-card.featured .dept-icon { width: 42px; height: 42px; flex-shrink: 0; margin-bottom: 0; }
+
+  .dept-icon { width: 30px; height: 30px; margin-bottom: 1rem; }
+  .dept-icon svg, .pilar-icon svg { width: 100%; height: 100%; display: block; }
+  .dept-card h3 {
+    font-family: var(--font-d);
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .dept-card p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; }
+
+  @media (max-width: 900px) {
+    .gov-intro { grid-template-columns: 1fr; gap: 2rem; }
+    .dept-grid { grid-template-columns: 1fr 1fr; }
+    .dept-card.featured { grid-column: auto; flex-direction: column; gap: 1rem; }
+  }
+  @media (max-width: 560px) {
+    .dept-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ============================================================
+     FORMULÁRIO DE ADESÃO
+  ============================================================ */
+  #adesao { background: var(--bg); }
+
+  .form-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .form-left .section-body { margin-bottom: 2rem; }
+
+  .form-perks {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin-top: 1.5rem;
+  }
+  .form-perks li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    font-size: 0.9rem;
+    color: var(--text-mid);
+  }
+  .perk-dot {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--grad);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    color: #fff;
+    font-weight: 700;
+  }
+
+  /* Form card */
+  .form-card {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.04);
+  }
+  .form-card h3 {
+    font-family: var(--font-d);
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin-bottom: 0.3rem;
+    color: var(--text);
+  }
+  .form-card .form-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1.8rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+  .field label {
+    font-family: var(--font-d);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--text-mid);
+    text-transform: uppercase;
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    padding: 0.75em 1em;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg);
+    font-family: var(--font-b);
+    font-size: 0.9rem;
+    color: var(--text);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+    outline: none;
+    appearance: none;
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--grad-mid1);
+    box-shadow: 0 0 0 3px rgba(240,90,40,0.1);
+  }
+  .field textarea { resize: vertical; min-height: 90px; }
+
+  .checkbox-field {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin: 0.5rem 0 1.5rem;
+  }
+  .checkbox-field input[type="checkbox"] {
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--border-dark);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: var(--grad-mid1);
+  }
+  .checkbox-field label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    cursor: pointer;
+  }
+  .checkbox-field label a {
+    color: var(--grad-mid1);
+    text-decoration: underline;
+  }
+
+  .btn-submit {
+    width: 100%;
+    font-family: var(--font-d);
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 1em 2em;
+    background: var(--grad);
+    color: #fff;
+    border-radius: 100px;
+    transition: opacity 0.2s, transform 0.2s var(--ease);
+    letter-spacing: 0.03em;
+  }
+  .btn-submit:hover { opacity: 0.88; transform: translateY(-2px); }
+  .btn-submit:active { transform: translateY(0); }
+
+  /* Mensagem de sucesso */
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+  .form-success .success-icon {
+    width: 56px; height: 56px;
+    margin: 0 auto 1rem;
+  }
+  .form-success .success-icon svg { width: 100%; height: 100%; }
+  .form-success h4 {
+    font-family: var(--font-d);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .form-success p { font-size: 0.9rem; color: var(--text-muted); }
+
+  @media (max-width: 860px) {
+    .form-layout { grid-template-columns: 1fr; gap: 3rem; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+
+  /* ============================================================
+     MODAL — TERMOS DE PARTICIPAÇÃO
+  ============================================================ */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: rgba(17,17,17,0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+  }
+  .modal-overlay[hidden] { display: none; }
+
+  .modal-box {
+    position: relative;
+    width: 95%;
+    max-width: 600px;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2.5rem;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.16);
+    opacity: 0;
+    transform: scale(0.95);
+    outline: none;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1.1rem; right: 1.1rem;
+    width: 34px; height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--text-muted);
+    transition: background 0.2s, color 0.2s;
+  }
+  .modal-close:hover { background: var(--bg-mid); color: var(--text); }
+  .modal-close svg { width: 18px; height: 18px; }
+  .modal-close:focus-visible,
+  .btn-modal-secondary:focus-visible,
+  .btn-modal-primary:focus-visible {
+    outline: 2px solid var(--grad-mid1);
+    outline-offset: 2px;
+  }
+
+  .modal-header { padding-right: 2rem; margin-bottom: 1.4rem; }
+  .modal-header .tag { margin-bottom: 0.9rem; }
+  .modal-header h3 {
+    font-family: var(--font-d);
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+
+  .modal-body {
+    font-size: 0.92rem;
+    color: var(--text-mid);
+    line-height: 1.75;
+  }
+  .modal-body > p { margin-bottom: 1.1rem; }
+
+  .modal-terms-list {
+    list-style: none;
+    counter-reset: term;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    margin-top: 0.4rem;
+  }
+  .modal-terms-list li {
+    counter-increment: term;
+    position: relative;
+    padding-left: 2.3rem;
+  }
+  .modal-terms-list li::before {
+    content: counter(term);
+    position: absolute;
+    left: 0; top: 0.05rem;
+    width: 1.5rem; height: 1.5rem;
+    border-radius: 50%;
+    background: var(--grad);
+    color: #fff;
+    font-family: var(--font-d);
+    font-size: 0.7rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .modal-terms-list strong {
+    display: block;
+    margin-bottom: 0.2rem;
+    font-family: var(--font-d);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .modal-footer {
+    display: flex;
+    gap: 0.8rem;
+    margin: 1.8rem 0 0;
+    padding: 1.4rem 0 0;
+    border-top: 1px solid var(--border);
+    background: transparent;
+  }
+  .btn-modal-secondary,
+  .btn-modal-primary {
+    flex: 1;
+    font-family: var(--font-d);
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.85em 1.5em;
+    border-radius: 100px;
+    text-align: center;
+    transition: opacity 0.2s, transform 0.2s var(--ease), background 0.2s;
+  }
+  .btn-modal-secondary {
+    background: var(--bg-soft);
+    border: 1.5px solid var(--border);
+    color: var(--text-mid);
+  }
+  .btn-modal-secondary:hover { background: var(--bg-mid); }
+  .btn-modal-primary { background: var(--grad); color: #fff; }
+  .btn-modal-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+  .btn-modal-primary:active,
+  .btn-modal-secondary:active { transform: translateY(0); }
+
+  @media (max-width: 600px) {
+    .modal-box { padding: 1.8rem 1.5rem 1.6rem; max-height: 90vh; }
+    .modal-footer { flex-direction: column-reverse; }
+  }
+
+  /* ============================================================
+     CTA / QUOTE SECTION
+  ============================================================ */
+  #quote-section {
+    background: var(--bg-soft);
+    padding: 5rem 0;
+    text-align: center;
+  }
+  .quote-inner { max-width: 700px; margin: 0 auto; }
+  .quote-mark {
+    font-family: var(--font-d);
+    font-size: 6rem;
+    font-weight: 900;
+    line-height: 0.5;
+    background: var(--grad-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+    margin-bottom: 1rem;
+  }
+  .quote-text {
+    font-family: var(--font-d);
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text);
+    margin-bottom: 0.8rem;
+  }
+  .quote-attr {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ============================================================
+     FOOTER
+  ============================================================ */
+  footer {
+    background: #0A0A0A;
+    color: #fff;
+    padding: 4rem 0 2.5rem;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 0.8fr 0.85fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  .footer-brand h2 {
+    font-family: var(--font-d);
+    font-size: 1.1rem;
+    font-weight: 900;
+    margin-bottom: 0.8rem;
+    background: var(--grad-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .footer-tagline {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #555;
+    margin-bottom: 1rem;
+  }
+  .footer-brand p { font-size: 0.85rem; color: #666; line-height: 1.7; max-width: 280px; }
+
+  .footer-col h4 {
+    font-family: var(--font-d);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #555;
+    margin-bottom: 1.2rem;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li + li { margin-top: 0.6rem; }
+  .footer-col ul a { font-size: 0.85rem; color: #777; transition: color 0.2s; }
+  .footer-col ul a:hover { color: #fff; }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-top: 2rem;
+    border-top: 1px solid #1e1e1e;
+    font-size: 0.75rem;
+    color: #444;
+  }
+
+  @media (max-width: 700px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .footer-brand { grid-column: 1 / -1; }
+  }
+  @media (max-width: 440px) {
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAV
+============================================================ -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <!-- Logo SVG inline (baseado no logo real do CE) -->
+    <a href="#" class="nav-logo">
+      <svg class="nav-logo-icon" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="lg-nav" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#E91E8C"/>
+            <stop offset="35%"  stop-color="#F05A28"/>
+            <stop offset="70%"  stop-color="#F7A800"/>
+            <stop offset="100%" stop-color="#8B2FC9"/>
+          </linearGradient>
+        </defs>
+        <!-- Outer ring -->
+        <path d="M60 8 A52 52 0 1 1 8 60" stroke="url(#lg-nav)" stroke-width="10" stroke-linecap="round" fill="none"/>
+        <!-- Mid ring -->
+        <path d="M60 22 A38 38 0 1 1 22 60" stroke="url(#lg-nav)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.75"/>
+        <!-- Inner C + line (G shape) -->
+        <path d="M60 36 A24 24 0 1 1 36 60 L60 60" stroke="url(#lg-nav)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.9"/>
+        <line x1="44" y1="60" x2="68" y2="60" stroke="url(#lg-nav)" stroke-width="7" stroke-linecap="round"/>
+      </svg>
+      <div class="nav-logo-text">
+        <span class="l1">Canto da</span>
+        <span class="l2">Engenharia</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#pilares">Pilares</a></li>
+      <li><a href="#governacao">Estrutura</a></li>
+      <li><a href="#adesao">Aderir</a></li>
+    </ul>
+    <a href="#adesao" class="nav-cta">Junta-te →</a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="nav-mobile" id="mobile-nav">
+  <button class="nav-mobile-close" onclick="closeMobileNav()">✕</button>
+  <a href="#sobre"      onclick="closeMobileNav()">Sobre</a>
+  <a href="#pilares"    onclick="closeMobileNav()">Pilares</a>
+  <a href="#governacao" onclick="closeMobileNav()">Estrutura</a>
+  <a href="#adesao"     onclick="closeMobileNav()">Aderir</a>
+</div>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section id="hero">
+  <div class="hero-blob"></div>
+  <div class="hero-blob-2"></div>
+  <canvas id="hero-canvas"></canvas>
+
+  <!-- Logo gigante em marca d'água -->
+  <div class="hero-logo-visual" aria-hidden="true">
+    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="lg-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#E91E8C"/>
+          <stop offset="35%"  stop-color="#F05A28"/>
+          <stop offset="70%"  stop-color="#F7A800"/>
+          <stop offset="100%" stop-color="#8B2FC9"/>
+        </linearGradient>
+      </defs>
+      <path d="M60 8 A52 52 0 1 1 8 60" stroke="url(#lg-bg)" stroke-width="10" stroke-linecap="round" fill="none"/>
+      <path d="M60 22 A38 38 0 1 1 22 60" stroke="url(#lg-bg)" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <path d="M60 36 A24 24 0 1 1 36 60 L60 60" stroke="url(#lg-bg)" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <line x1="44" y1="60" x2="68" y2="60" stroke="url(#lg-bg)" stroke-width="7" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-eyebrow reveal">
+        <span class="tag">Luanda, Angola · Fundado em 2025</span>
+      </div>
+      <h1 class="hero-title reveal" id="hero-title">
+        Cresceste sem<br/>
+        luz constante —<br/>
+        imagina o que podes<br/>
+        <span class="grad-text">construir com conhecimento.</span>
+      </h1>
+      <p class="hero-sub reveal">
+        Engenharia aplicada às comunidades. Jovens que transformam
+        obras em salas de aula e desafios locais em soluções reais.
+      </p>
+      <div class="hero-actions reveal">
+        <a href="#adesao"  class="btn-grad">Junta-te ao Movimento</a>
+        <a href="#pilares" class="btn-outline">Os Nossos Pilares</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-track"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SOBRE
+============================================================ -->
+<section id="sobre" class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-img-wrap">
+          <!-- Substituir pelo: <img src="roda-saber.jpg" alt="Roda de Saber"/> -->
+          <div class="about-img-placeholder">
+            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="lg-ph" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#E91E8C"/><stop offset="100%" stop-color="#8B2FC9"/></linearGradient></defs>
+              <circle cx="40" cy="40" r="30" stroke="url(#lg-ph)" stroke-width="2"/>
+              <path d="M40 10 L40 70 M10 40 L70 40" stroke="url(#lg-ph)" stroke-width="2"/>
+              <circle cx="40" cy="40" r="8" fill="url(#lg-ph)" opacity="0.3"/>
+            </svg>
+          </div>
+        </div>
+        <div class="about-badge">
+          <strong>2025</strong>
+          <span>Fundação</span>
+        </div>
+      </div>
+      <div class="about-text reveal">
+        <div class="section-label"><span class="tag">Quem Somos</span></div>
+        <h2 class="section-title">Engenharia que <span class="grad-text">serve</span> a comunidade</h2>
+        <p class="section-body">
+          O Canto da Engenharia nasceu em Luanda com uma convicção clara: o conhecimento técnico só tem valor quando circula e é aplicado. Somos um movimento de jovens engenheiros, estudantes e curiosos que transformam obras em salas de aula e problemas comunitários em projetos reais.
+        </p>
+        <p class="section-body" style="margin-top:1rem;">
+          A nossa missão é democratizar a engenharia — torná-la acessível, prática e humanizada, ao serviço das famílias e bairros de Angola.
+        </p>
+        <div class="about-values">
+          <div class="value-item">
+            <h4>Visão</h4>
+            <p>Angola onde o conhecimento técnico circula livremente e constrói comunidades.</p>
+          </div>
+          <div class="value-item">
+            <h4>Missão</h4>
+            <p>Aplicar a engenharia a desafios reais através da formação, acção e inovação.</p>
+          </div>
+          <div class="value-item">
+            <h4>Método</h4>
+            <p>Obras como salas de aula, ruas como laboratórios, pessoas como recursos.</p>
+          </div>
+          <div class="value-item">
+            <h4>Identidade</h4>
+            <p>Um universo, várias visões — diversidade de áreas, unidade de propósito.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================
+     PILARES
+============================================================ -->
+<section id="pilares" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label"><span class="tag">O Que Fazemos</span></div>
+      <h2 class="section-title">Os 4 Pilares do <span class="grad-text">Movimento</span></h2>
+    </div>
+
+    <div class="pilares-grid">
+      <!-- Pilar 1 — Institucional (cinza) -->
+      <div class="pilar-card light reveal">
+        <span class="pilar-num">01</span>
+        <span class="pilar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </span>
+        <h3>Oficinas Técnicas</h3>
+        <p>Formação prática em eletricidade, construção civil e tecnologia. Cada oficina é conduzida em obras, estaleiros e espaços comunitários reais — não em salas de aula teóricas.</p>
+      </div>
+
+      <!-- Pilar 2 — Acção (gradiente) -->
+      <div class="pilar-card vibrant reveal">
+        <span class="pilar-num">02</span>
+        <span class="pilar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </span>
+        <h3>Rodas de Saber</h3>
+        <p>Encontros de debate técnico onde engenheiros experientes, estudantes e comunidade dialogam em pé de igualdade. O conhecimento que não circula, não constrói.</p>
+      </div>
+
+      <!-- Pilar 3 — Acção (gradiente) -->
+      <div class="pilar-card vibrant reveal">
+        <span class="pilar-num">03</span>
+        <span class="pilar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2"/>
+            <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+            <line x1="12" y1="12" x2="12" y2="16"/>
+            <line x1="10" y1="14" x2="14" y2="14"/>
+          </svg>
+        </span>
+        <h3>Projetos Comunitários</h3>
+        <p>Intervenções reais nos bairros — infraestruturas, saneamento, energia. Engenharia que responde a quem precisa, não a quem paga mais.</p>
+      </div>
+
+      <!-- Pilar 4 — Institucional (cinza) -->
+      <div class="pilar-card light reveal">
+        <span class="pilar-num">04</span>
+        <span class="pilar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
+            <path d="M9 18h6"/><path d="M10 22h4"/>
+          </svg>
+        </span>
+        <h3>Inovação Aberta</h3>
+        <p>Hackathons locais, protótipos de baixo custo e partilha de soluções adaptadas à realidade angolana. Inovar não é importar — é inventar com o que temos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     STATS BAR
+============================================================ -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-inner">
+      <div class="stat-item reveal">
+        <div class="stat-number" data-count="120">0</div>
+        <div class="stat-label">Membros Activos</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-number" data-count="18">0</div>
+        <div class="stat-label">Oficinas Realizadas</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-number" data-count="6">0</div>
+        <div class="stat-label">Projetos Comunitários</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-number" data-count="5">0</div>
+        <div class="stat-label">Departamentos</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     GOVERNAÇÃO
+============================================================ -->
+<section id="governacao" class="section">
+  <div class="container">
+    <div class="gov-intro">
+      <div>
+        <div class="section-label reveal"><span class="tag">Estrutura</span></div>
+        <h2 class="section-title reveal">Como nos <span class="grad-text">organizamos</span></h2>
+      </div>
+      <p class="gov-desc reveal">
+        Cinco departamentos complementares, cada um com autonomia para actuar e responsabilidade de contribuir para a missão colectiva. Não há hierarquia de poder — há hierarquia de responsabilidade.
+      </p>
+    </div>
+    <div class="dept-grid">
+      <div class="dept-card featured reveal">
+        <div class="dept-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Administração & Coordenação</h3>
+          <p>O núcleo estratégico do movimento. Garante que a visão se traduz em acção, que os recursos chegam onde são precisos e que o movimento cresce com integridade e governação clara.</p>
+        </div>
+      </div>
+      <div class="dept-card reveal">
+        <div class="dept-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <h3>Marketing & Comunicação</h3>
+        <p>Conta a história do movimento. Redes sociais, cobertura de eventos, identidade visual e disseminação do conhecimento produzido.</p>
+      </div>
+      <div class="dept-card reveal">
+        <div class="dept-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 20h.01M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/>
+          </svg>
+        </div>
+        <h3>Gestão de Projetos</h3>
+        <p>Planeia, executa e avalia os projetos comunitários. Define metodologias, gere equipas no terreno e garante impacto mensurável.</p>
+      </div>
+     <div class="dept-card reveal">
+  <div class="dept-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+      <circle cx="9" cy="7" r="4"></circle>
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+    </svg>
+  </div>
+  <h3>Parcerias & Recursos</h3>
+  <p>Constrói pontes com empresas, universidades e entidades. Mobiliza apoio técnico, material e financeiro.</p>
+</div>
+
+<div class="dept-card reveal">
+  <div class="dept-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="2" y1="12" x2="22" y2="12"></line>
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+    </svg>
+  </div>
+  <h3>Acção Social</h3>
+  <p>Interface directa com as comunidades. Identifica necessidades reais e acompanha o impacto dos projetos.</p>
+</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================
+     FORMULÁRIO DE ADESÃO
+============================================================ -->
+<section id="adesao" class="section">
+  <div class="container">
+    <div class="form-layout">
+      <!-- Lado esquerdo: contexto -->
+      <div class="form-left">
+        <div class="section-label reveal"><span class="tag">Junta-te</span></div>
+        <h2 class="section-title reveal">Faz parte do <span class="grad-text">movimento</span></h2>
+        <p class="section-body reveal">
+          Seja engenheiro, estudante, técnico ou simplesmente alguém que acredita que Angola pode ser construída de dentro para fora — há um lugar para ti no Canto da Engenharia.
+        </p>
+        <ul class="form-perks reveal">
+          <li>
+            <div class="perk-dot">✓</div>
+            <span>Acesso às Oficinas Técnicas e Rodas de Saber mensais</span>
+          </li>
+          <li>
+            <div class="perk-dot">✓</div>
+            <span>Participação em projetos comunitários reais em Luanda</span>
+          </li>
+          <li>
+            <div class="perk-dot">✓</div>
+            <span>Rede de jovens engenheiros e técnicos angolanos</span>
+          </li>
+          <li>
+            <div class="perk-dot">✓</div>
+            <span>Acesso a materiais, guias e conteúdos técnicos gratuitos</span>
+          </li>
+          <li>
+            <div class="perk-dot">✓</div>
+            <span>Possibilidade de liderar o teu próprio projeto comunitário</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Lado direito: formulário -->
+      <div class="form-card reveal">
+        <h3>Pedido de Adesão ao C.E.</h3>
+        <p class="form-subtitle">Preenche os teus dados — entramos em contacto em 48h.</p>
+
+        <div id="adesao-form">
+          <div class="form-row">
+            <div class="field">
+              <label for="f-nome">Nome *</label>
+              <input type="text" id="f-nome" placeholder="O teu nome" required />
+            </div>
+            <div class="field">
+              <label for="f-apelido">Apelido *</label>
+              <input type="text" id="f-apelido" placeholder="O teu apelido" required />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="f-email">E-mail *</label>
+            <input type="email" id="f-email" placeholder="exemplo@email.com" required />
+          </div>
+
+          <div class="field">
+            <label for="f-tel">Telefone / WhatsApp *</label>
+            <input type="tel" id="f-tel" placeholder="+244 9XX XXX XXX" required />
+          </div>
+
+          <div class="field">
+            <label for="f-area">Área de Formação / Interesse *</label>
+            <select id="f-area" required>
+              <option value="" disabled selected>Selecciona a tua área</option>
+              <option>Engenharia Civil</option>
+              <option>Engenharia Eléctrica</option>
+              <option>Engenharia Mecânica</option>
+              <option>Engenharia Informática / TI</option>
+              <option>Arquitectura</option>
+              <option>Técnico de Construção</option>
+              <option>Estudante (Ensino Médio)</option>
+              <option>Estudante Universitário</option>
+              <option>Outra área</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="f-motivo">Por que queres juntar-te? (opcional)</label>
+            <textarea id="f-motivo" placeholder="Conta-nos brevemente o que te motivou…"></textarea>
+          </div>
+
+          <div class="checkbox-field">
+            <input type="checkbox" id="f-terms" required />
+            <label for="f-terms">
+              Concordo com os <a href="#" data-open-terms>termos de participação</a> do Canto da Engenharia e autorizo o contacto via WhatsApp/e-mail.
+            </label>
+          </div>
+
+          <button class="btn-submit" onclick="submitForm()">
+            Enviar Pedido de Adesão →
+          </button>
+        </div>
+
+        <div class="form-success" id="form-success">
+          <div class="success-icon">🎉</div>
+          <h4>Pedido enviado com sucesso!</h4>
+          <p>Bem-vindo(a) ao movimento. Entraremos em contacto via WhatsApp em breve. <br/><strong>O conhecimento que não circula, não constrói.</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     QUOTE
+============================================================ -->
+<section id="quote-section">
+  <div class="container">
+    <div class="quote-inner reveal">
+      <span class="quote-mark">"</span>
+      <p class="quote-text">O conhecimento que não circula, não constrói.</p>
+      <p class="quote-attr">— Canto da Engenharia · Luanda, 2025</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODAL — TERMOS DE PARTICIPAÇÃO
+============================================================ -->
+<div class="modal-overlay" id="terms-modal-overlay" hidden>
+  <div
+    class="modal-box"
+    id="terms-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="terms-modal-title"
+    aria-describedby="terms-modal-desc"
+    tabindex="-1"
+  >
+    <button class="modal-close" id="terms-modal-close" type="button" aria-label="Fechar modal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+
+    <header class="modal-header">
+      <span class="tag">Termos</span>
+      <h3 id="terms-modal-title">Termos de Participação</h3>
+    </header>
+
+    <div class="modal-body" id="terms-modal-desc">
+      <p>
+        Ao aderir ao Canto da Engenharia, juntas-te a um movimento com uma missão clara: transformar talento bruto em engenharia aplicada, ao serviço das comunidades de Luanda. Estes termos definem o que esperamos de ti — e o que podes esperar de nós.
+      </p>
+      <ol class="modal-terms-list">
+        <li>
+          <strong>Missão e propósito</strong>
+          A tua participação está orientada para a aplicação prática do conhecimento técnico em projetos comunitários reais, e não apenas para a acumulação teórica.
+        </li>
+        <li>
+          <strong>Conduta e respeito</strong>
+          Esperamos colaboração, pontualidade e respeito mútuo nas Oficinas Técnicas, Rodas de Saber e demais atividades do movimento.
+        </li>
+        <li>
+          <strong>Comunicação</strong>
+          Autorizas o contacto via WhatsApp e e-mail para fins de coordenação de atividades, convites e partilha de conteúdos técnicos.
+        </li>
+        <li>
+          <strong>Conteúdos e materiais</strong>
+          Os materiais, guias e conteúdos partilhados pelo Canto da Engenharia destinam-se ao uso pessoal e à disseminação do conhecimento — nunca à exploração comercial sem autorização.
+        </li>
+        <li>
+          <strong>Participação voluntária</strong>
+          O envolvimento no movimento é voluntário e podes encerrar a tua participação em qualquer momento, mediante contacto com a equipa de Parcerias & Recursos.
+        </li>
+      </ol>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-modal-secondary" id="terms-modal-cancel" type="button">Fechar</button>
+      <button class="btn-modal-primary" id="terms-modal-accept" type="button">Li e Aceito</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <p class="footer-tagline">Um universo, várias visões</p>
+        <h2>Canto da Engenharia</h2>
+        <p>Movimento juvenil de engenharia aplicada às comunidades de Luanda, Angola. Fundado em 2025 com a missão de democratizar o conhecimento técnico.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#sobre">Quem Somos</a></li>
+          <li><a href="#pilares">Os 4 Pilares</a></li>
+          <li><a href="#governacao">Estrutura</a></li>
+          <li><a href="#adesao">Aderir ao Movimento</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="https://www.cantodaengenharia.ao">cantodaengenharia.ao</a></li>
+          <li><a href="mailto:info@cantodaengenharia.ao">info@cantodaengenharia.ao</a></li>
+          <li><a href="https://wa.me/244922040548">WhatsApp</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Redes & Comunidade</h4>
+        <ul>
+          <li><a href="https://www.instagram.com/cantodaengenharia?igsh=bGt3cGUzY3FnYXRv&utm_source=qr" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://www.facebook.com/profile.php?id=61586753635522" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="https://whatsapp.com/channel/0029Vb5qaGQJuyAJXMOCt12y" target="_blank" rel="noopener">Canal de WhatsApp</a></li>
+          <li><a href="https://chat.whatsapp.com/ERAR0VkGxYB0gxkFiK6C3z?mode=wwt" target="_blank" rel="noopener">Grupo de WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Canto da Engenharia · Luanda, Angola</span>
+      <span>Engenharia para quem constrói Angola.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     SCRIPTS
+============================================================ -->
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" onload="initThreeJS()"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" onload="initAnime()"></script>
+
+<script>
+/* ---- NAV ---- */
+const navbar    = document.getElementById('navbar');
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobile-nav');
+
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+}, { passive: true });
+
+hamburger.addEventListener('click', () => mobileNav.classList.toggle('open'));
+function closeMobileNav() { mobileNav.classList.remove('open'); }
+
+/* ---- REVEAL ---- */
+const revealEls = document.querySelectorAll('.reveal');
+const revealIO  = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); revealIO.unobserve(e.target); }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+revealEls.forEach(el => revealIO.observe(el));
+
+/* ---- COUNTERS ---- */
+function animateCounters() {
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const target = parseInt(el.dataset.count);
+    const start  = performance.now();
+    const dur    = 1500;
+    (function step(now) {
+      const t = Math.min((now - start) / dur, 1);
+      const v = 1 - Math.pow(1 - t, 3);
+      el.textContent = Math.round(v * target) + (target >= 10 ? '+' : '');
+      if (t < 1) requestAnimationFrame(step);
+    })(start);
+  });
+}
+const statsIO = new IntersectionObserver(([e]) => {
+  if (e.isIntersecting) { animateCounters(); statsIO.disconnect(); }
+}, { threshold: 0.4 });
+statsIO.observe(document.querySelector('.stats-bar'));
+
+/* ---- FORM ---- */
+function submitForm() {
+  const nome  = document.getElementById('f-nome').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const tel   = document.getElementById('f-tel').value.trim();
+  const area  = document.getElementById('f-area').value;
+  const terms = document.getElementById('f-terms').checked;
+
+  if (!nome || !email || !tel || !area) {
+    alert('Por favor preenche todos os campos obrigatórios (*).');
+    return;
+  }
+  if (!terms) {
+    alert('Precisas de aceitar os termos de participação.');
+    return;
+  }
+
+  // Montar mensagem para WhatsApp
+  const apelido = document.getElementById('f-apelido').value.trim();
+  const motivo  = document.getElementById('f-motivo').value.trim();
+  const msg = encodeURIComponent(
+    `Olá! Quero aderir ao Canto da Engenharia.\n\n` +
+    `*Nome:* ${nome} ${apelido}\n` +
+    `*E-mail:* ${email}\n` +
+    `*Telefone:* ${tel}\n` +
+    `*Área:* ${area}\n` +
+    (motivo ? `*Motivação:* ${motivo}` : '')
+  );
+
+  // Abrir WhatsApp (actualizar número real)
+  window.open(`https://wa.me/244922040548?text=${msg}`, '_blank');
+
+  // Mostrar mensagem de sucesso
+  document.getElementById('adesao-form').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+}
+
+/* ---- THREE.JS: rede de partículas com cores do gradiente ---- */
+function initThreeJS() {
+  if (typeof THREE === 'undefined') return;
+  const canvas   = document.getElementById('hero-canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+
+  const scene  = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
+  camera.position.z = 120;
+
+  const COUNT   = window.innerWidth < 600 ? 35 : 65;
+  const SPREAD  = 100;
+  const COLORS  = [0xE91E8C, 0xF05A28, 0xF7A800, 0x8B2FC9];
+  const pos     = [];
+  const vel     = [];
+
+  for (let i = 0; i < COUNT; i++) {
+    pos.push((Math.random()-0.5)*SPREAD*2, (Math.random()-0.5)*SPREAD, (Math.random()-0.5)*20);
+    vel.push((Math.random()-0.5)*0.035, (Math.random()-0.5)*0.035, 0);
+  }
+
+  const geo = new THREE.BufferGeometry();
+  const pa  = new Float32Array(pos);
+  geo.setAttribute('position', new THREE.BufferAttribute(pa, 3));
+  const mat  = new THREE.PointsMaterial({ color: 0xE91E8C, size: 1.5, transparent: true, opacity: 0.55 });
+  const pts  = new THREE.Points(geo, mat);
+  scene.add(pts);
+
+  const lGeo = new THREE.BufferGeometry();
+  const lMat = new THREE.LineSegments(lGeo, new THREE.LineBasicMaterial({ color: 0xF05A28, transparent: true, opacity: 0.12 }));
+  scene.add(lMat);
+
+  function resize() {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  let mx = 0, my = 0;
+  window.addEventListener('mousemove', e => {
+    mx = (e.clientX / window.innerWidth - 0.5) * 10;
+    my = (e.clientY / window.innerHeight - 0.5) * -6;
+  }, { passive: true });
+
+  let aid;
+  function animate() {
+    aid = requestAnimationFrame(animate);
+    const p = geo.attributes.position.array;
+    for (let i = 0; i < COUNT; i++) {
+      p[i*3]   += vel[i*3];
+      p[i*3+1] += vel[i*3+1];
+      if (Math.abs(p[i*3])   > SPREAD)      vel[i*3]   *= -1;
+      if (Math.abs(p[i*3+1]) > SPREAD * .5) vel[i*3+1] *= -1;
+    }
+    geo.attributes.position.needsUpdate = true;
+
+    const lv = [];
+    for (let i = 0; i < COUNT; i++) {
+      for (let j = i+1; j < COUNT; j++) {
+        const dx = p[i*3]-p[j*3], dy = p[i*3+1]-p[j*3+1];
+        if (dx*dx + dy*dy < 900) lv.push(p[i*3],p[i*3+1],p[i*3+2],p[j*3],p[j*3+1],p[j*3+2]);
+      }
+    }
+    lGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(lv), 3));
+
+    camera.position.x += (mx - camera.position.x) * 0.025;
+    camera.position.y += (my - camera.position.y) * 0.025;
+    camera.lookAt(scene.position);
+    renderer.render(scene, camera);
+  }
+
+  const hIO = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) animate(); else cancelAnimationFrame(aid);
+  }, { threshold: 0 });
+  hIO.observe(canvas);
+  animate();
+}
+
+/* ---- ANIME.JS: stagger nos cards ---- */
+function initAnime() {
+  if (typeof anime === 'undefined') return;
+
+  const cardIO = new IntersectionObserver(entries => {
+    const vis = entries.filter(e => e.isIntersecting).map(e => e.target);
+    if (!vis.length) return;
+    anime({
+      targets: vis,
+      opacity:    [0, 1],
+      translateY: [36, 0],
+      delay: anime.stagger(90),
+      duration: 650,
+      easing: 'easeOutExpo',
+    });
+    vis.forEach(el => cardIO.unobserve(el));
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.pilar-card, .dept-card, .value-item').forEach(c => {
+    c.style.opacity = '0';
+    cardIO.observe(c);
+  });
+}
+
+/* ---- MODAL: Termos de Participação ---- */
+(function () {
+  const overlay   = document.getElementById('terms-modal-overlay');
+  const modalBox  = document.getElementById('terms-modal');
+  const closeBtn  = document.getElementById('terms-modal-close');
+  const cancelBtn = document.getElementById('terms-modal-cancel');
+  const acceptBtn = document.getElementById('terms-modal-accept');
+  const triggers  = document.querySelectorAll('[data-open-terms]');
+
+  if (!overlay || !modalBox) return;
+
+  const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let lastFocusedEl = null;
+
+  function getFocusableEls() {
+    return Array.from(modalBox.querySelectorAll(FOCUSABLE_SELECTOR));
+  }
+
+  /* Mantém o foco preso (trap) dentro do modal */
+  function trapFocus(e) {
+    if (e.key !== 'Tab') return;
+    const focusables = getFocusableEls();
+    if (!focusables.length) return;
+
+    const first = focusables[0];
+    const last  = focusables[focusables.length - 1];
+
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
+  function handleKeydown(e) {
+    if (e.key === 'Escape') {
+      closeModal();
+    } else {
+      trapFocus(e);
+    }
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === overlay) closeModal();
+  }
+
+  function openModal(triggerEl) {
+    lastFocusedEl = triggerEl || document.activeElement;
+
+    overlay.removeAttribute('hidden');
+    document.body.style.overflow = 'hidden';
+
+    const duration = prefersReducedMotion ? 0 : 400;
+
+    if (typeof anime !== 'undefined') {
+      anime({ targets: overlay,  opacity: [0, 1], duration, easing: 'easeOutExpo' });
+      anime({
+        targets: modalBox,
+        opacity: [0, 1],
+        scale:   [0.95, 1],
+        duration,
+        easing: 'easeOutExpo',
+      });
+    } else {
+      overlay.style.opacity      = '1';
+      modalBox.style.opacity     = '1';
+      modalBox.style.transform   = 'scale(1)';
+    }
+
+    document.addEventListener('keydown', handleKeydown);
+    overlay.addEventListener('click', handleOverlayClick);
+
+    const focusables = getFocusableEls();
+    (focusables[0] || modalBox).focus();
+  }
+
+  function closeModal() {
+    document.removeEventListener('keydown', handleKeydown);
+    overlay.removeEventListener('click', handleOverlayClick);
+
+    const duration = prefersReducedMotion ? 0 : 300;
+
+    function finish() {
+      overlay.setAttribute('hidden', '');
+      document.body.style.overflow = '';
+      if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
+        lastFocusedEl.focus();
+      }
+    }
+
+    if (typeof anime !== 'undefined') {
+      anime({ targets: overlay, opacity: [1, 0], duration, easing: 'easeOutExpo' });
+      anime({
+        targets: modalBox,
+        opacity: [1, 0],
+        scale:   [1, 0.95],
+        duration,
+        easing: 'easeOutExpo',
+        complete: finish,
+      });
+    } else {
+      overlay.style.opacity    = '0';
+      modalBox.style.opacity   = '0';
+      modalBox.style.transform = 'scale(0.95)';
+      finish();
+    }
+  }
+
+  triggers.forEach((trigger) => {
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      openModal(trigger);
+    });
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  cancelBtn.addEventListener('click', closeModal);
+  acceptBtn.addEventListener('click', () => {
+    const termsCheckbox = document.getElementById('f-terms');
+    if (termsCheckbox) termsCheckbox.checked = true;
+    closeModal();
+  });
+
+  // API pública, caso seja necessário invocar de outro ponto do site
+  window.openTermsModal  = openModal;
+  window.closeTermsModal = closeModal;
+})();
+
+/* ---- Reduced motion ---- */
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+}
+</script>
+
+</body>
+</html>
