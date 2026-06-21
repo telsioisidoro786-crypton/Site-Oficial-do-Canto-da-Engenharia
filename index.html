@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/jpeg" href="logo-crop.png" />
+  <link rel="apple-touch-icon" href="logo-crop.jpg" />
 
   <style>
   /* ============================================================
@@ -160,6 +162,8 @@
   .nav-logo-icon {
     width: 32px; height: 32px;
     flex-shrink: 0;
+    object-fit: cover;
+    border-radius: 50%;
   }
   .nav-logo-text span { display: block; }
   .nav-logo-text .l1 {
@@ -1154,25 +1158,9 @@
 ============================================================ -->
 <nav id="navbar">
   <div class="container nav-inner">
-    <!-- Logo SVG inline (baseado no logo real do CE) -->
+    <!-- Logo: imagem cortada (logo-crop.jpg) -->
     <a href="#" class="nav-logo">
-      <svg class="nav-logo-icon" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="lg-nav" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%"   stop-color="#E91E8C"/>
-            <stop offset="35%"  stop-color="#F05A28"/>
-            <stop offset="70%"  stop-color="#F7A800"/>
-            <stop offset="100%" stop-color="#8B2FC9"/>
-          </linearGradient>
-        </defs>
-        <!-- Outer ring -->
-        <path d="M60 8 A52 52 0 1 1 8 60" stroke="url(#lg-nav)" stroke-width="10" stroke-linecap="round" fill="none"/>
-        <!-- Mid ring -->
-        <path d="M60 22 A38 38 0 1 1 22 60" stroke="url(#lg-nav)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.75"/>
-        <!-- Inner C + line (G shape) -->
-        <path d="M60 36 A24 24 0 1 1 36 60 L60 60" stroke="url(#lg-nav)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.9"/>
-        <line x1="44" y1="60" x2="68" y2="60" stroke="url(#lg-nav)" stroke-width="7" stroke-linecap="round"/>
-      </svg>
+      <img src="logo-crop.png" alt="Canto da Engenharia" class="nav-logo-icon" />
       <div class="nav-logo-text">
         <span class="l1">Canto da</span>
         <span class="l2">Engenharia</span>
@@ -1211,20 +1199,7 @@
 
   <!-- Logo gigante em marca d'água -->
   <div class="hero-logo-visual" aria-hidden="true">
-    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="lg-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%"   stop-color="#E91E8C"/>
-          <stop offset="35%"  stop-color="#F05A28"/>
-          <stop offset="70%"  stop-color="#F7A800"/>
-          <stop offset="100%" stop-color="#8B2FC9"/>
-        </linearGradient>
-      </defs>
-      <path d="M60 8 A52 52 0 1 1 8 60" stroke="url(#lg-bg)" stroke-width="10" stroke-linecap="round" fill="none"/>
-      <path d="M60 22 A38 38 0 1 1 22 60" stroke="url(#lg-bg)" stroke-width="8" stroke-linecap="round" fill="none"/>
-      <path d="M60 36 A24 24 0 1 1 36 60 L60 60" stroke="url(#lg-bg)" stroke-width="8" stroke-linecap="round" fill="none"/>
-      <line x1="44" y1="60" x2="68" y2="60" stroke="url(#lg-bg)" stroke-width="7" stroke-linecap="round"/>
-    </svg>
+    <img src="logo-crop.png" alt="">
   </div>
 
   <div class="container">
@@ -1265,12 +1240,7 @@
         <div class="about-img-wrap">
           <!-- Substituir pelo: <img src="roda-saber.jpg" alt="Roda de Saber"/> -->
           <div class="about-img-placeholder">
-            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs><linearGradient id="lg-ph" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#E91E8C"/><stop offset="100%" stop-color="#8B2FC9"/></linearGradient></defs>
-              <circle cx="40" cy="40" r="30" stroke="url(#lg-ph)" stroke-width="2"/>
-              <path d="M40 10 L40 70 M10 40 L70 40" stroke="url(#lg-ph)" stroke-width="2"/>
-              <circle cx="40" cy="40" r="8" fill="url(#lg-ph)" opacity="0.3"/>
-            </svg>
+           <img src="people.jpeg" alt="">
           </div>
         </div>
         <div class="about-badge">
