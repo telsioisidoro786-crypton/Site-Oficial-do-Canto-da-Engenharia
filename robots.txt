@@ -1,0 +1,8 @@
+# robots.txt — Canto da Engenharia
+# https://canto-da-engenharia.vercel.app/
+
+User-agent: *
+Allow: /
+
+# Sitemap — diz ao Google onde encontrar o mapa do site
+Sitemap: https://canto-da-engenharia.vercel.app/sitemap.xml
