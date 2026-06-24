@@ -31,6 +31,16 @@
   <meta name="twitter:title" content="Canto da Engenharia — Um universo, várias visões" />
   <meta name="twitter:description" content="Movimento juvenil que aplica a engenharia ao desenvolvimento social das comunidades de Luanda." />
   <meta name="twitter:image" content="https://canto-da-engenharia.vercel.app/logo-crop.png" />
+  <!-- SEO extra -->
+  <meta name="keywords" content="Canto da Engenharia, engenharia Angola, movimento juvenil Luanda, oficinas técnicas Angola, jovens engenheiros Angola, desenvolvimento comunitário" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <meta name="author" content="Canto da Engenharia" />
+  <meta name="theme-color" content="#E91E8C" />
+  <meta name="geo.region" content="AO-LUA" />
+  <meta name="geo.placename" content="Luanda, Angola" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Organization","name":"Canto da Engenharia","alternateName":["CE","C.E."],"url":"https://canto-da-engenharia.vercel.app","description":"Movimento juvenil de Luanda que aplica a engenharia ao desenvolvimento social das comunidades de Angola. Fundado em 2025.","foundingDate":"2025","foundingLocation":{"@type":"Place","name":"Luanda","addressCountry":"AO"},"sameAs":["https://www.instagram.com/cantodaengenharia","https://www.facebook.com/profile.php?id=61586753635522"]}
+  </script>
 
   <style>
   /* ============================================================
@@ -1071,6 +1081,346 @@
     .modal-footer { flex-direction: column-reverse; }
   }
 
+
+  /* ============================================================
+     SLIDESHOW — Secção Sobre
+  ============================================================ */
+  .about-slideshow {
+    position: relative;
+    width: 100%; height: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    pointer-events: none;
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
+  .slide img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .slide-placeholder {
+    width: 100%; height: 100%;
+    background: var(--bg-mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.8rem;
+    color: var(--text-muted);
+    font-family: var(--font-d);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .slide-placeholder svg { width: 40px; height: 40px; opacity: 0.25; }
+
+  /* Dots de navegação */
+  .slide-dots {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+    z-index: 10;
+  }
+  .slide-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    border: none;
+    padding: 0;
+  }
+  .slide-dot.active {
+    background: #fff;
+    transform: scale(1.3);
+  }
+
+  /* Setas */
+  .slide-prev, .slide-next {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    z-index: 10;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.85);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  }
+  .slide-prev { left: 0.8rem; }
+  .slide-next { right: 0.8rem; }
+  .slide-prev:hover, .slide-next:hover { background: #fff; transform: translateY(-50%) scale(1.08); }
+  .slide-prev svg, .slide-next svg { width: 16px; height: 16px; color: var(--text); }
+
+  /* ============================================================
+     FUNDADORES
+  ============================================================ */
+  #fundadores { background: var(--bg); }
+
+  .founders-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .founder-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg-soft);
+    transition: transform 0.3s var(--ease), box-shadow 0.3s;
+    position: relative;
+  }
+  .founder-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba(233,30,140,0.1);
+  }
+  .founder-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--grad);
+  }
+  .founder-photo {
+    aspect-ratio: 1 / 1;
+    background: var(--bg-mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .founder-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .founder-photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f8f8f8, #efefef);
+  }
+  .founder-photo-placeholder svg { width: 64px; height: 64px; opacity: 0.18; }
+  .founder-info {
+    padding: 1.4rem 1.5rem 1.6rem;
+  }
+  .founder-info h3 {
+    font-family: var(--font-d);
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+  .founder-role {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--grad-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.75rem;
+  }
+  .founder-bio {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-top: 0.6rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+  .founder-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.9rem;
+  }
+  .founder-tag {
+    font-family: var(--font-d);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.25em 0.7em;
+    border-radius: 100px;
+    background: var(--bg-mid);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  /* Imagem de fundo da secção fundadores */
+  .founders-bg-img {
+    margin-top: 4rem;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 16/7;
+    background: var(--bg-mid);
+  }
+  .founders-bg-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .founders-bg-placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: linear-gradient(135deg, #f4f4f4, #ebebeb);
+    color: var(--text-muted);
+  }
+  .founders-bg-placeholder svg { width: 48px; height: 48px; opacity: 0.2; }
+  .founders-bg-placeholder span {
+    font-family: var(--font-d);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+  .founders-bg-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(233,30,140,0.06), rgba(139,47,201,0.06));
+    pointer-events: none;
+  }
+
+  /* Objectivo principal */
+  .objetivo-banner {
+    margin-top: 3rem;
+    padding: 2.4rem 2.8rem;
+    background: var(--grad);
+    border-radius: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    box-shadow: 0 12px 40px rgba(233,30,140,0.18);
+  }
+  .objetivo-icon {
+    width: 48px; height: 48px;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .objetivo-icon svg { width: 24px; height: 24px; color: #fff; }
+  .objetivo-text {}
+  .objetivo-label {
+    font-family: var(--font-d);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 0.5rem;
+  }
+  .objetivo-text p {
+    font-family: var(--font-d);
+    font-weight: 600;
+    font-size: clamp(0.95rem, 2vw, 1.15rem);
+    color: #fff;
+    line-height: 1.55;
+  }
+
+  @media (max-width: 600px) {
+    .objetivo-banner { flex-direction: column; gap: 1rem; padding: 1.8rem; }
+    .founders-bg-img { aspect-ratio: 4/3; }
+  }
+
+  @media (max-width: 500px) {
+    .founders-grid { grid-template-columns: 1fr; max-width: 320px; }
+  }
+
+  /* ============================================================
+     MEMBROS
+  ============================================================ */
+  #membros { background: var(--bg-soft); }
+
+  .membros-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+  }
+  .membro-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.4rem 1rem 1.2rem;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+    text-align: center;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s, border-color 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .membro-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--grad);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s var(--ease);
+  }
+  .membro-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.07);
+    border-color: rgba(240,90,40,0.2);
+  }
+  .membro-card:hover::after { transform: scaleX(1); }
+  .membro-icon {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--bg-mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .membro-icon svg { width: 22px; height: 22px; color: var(--text-muted); }
+  .membro-name {
+    font-family: var(--font-d);
+    font-weight: 600;
+    font-size: 0.78rem;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .membro-area {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 900px) { .membros-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 560px) { .membros-grid { grid-template-columns: repeat(2, 1fr); } }
+
   /* ============================================================
      CTA / QUOTE SECTION
   ============================================================ */
@@ -1196,6 +1546,7 @@
       <li><a href="#sobre">Sobre</a></li>
       <li><a href="#pilares">Pilares</a></li>
       <li><a href="#governacao">Estrutura</a></li>
+      <li><a href="#fundadores">Equipa</a></li>
       <li><a href="#adesao">Aderir</a></li>
     </ul>
     <a href="#adesao" class="nav-cta">Junta-te →</a>
@@ -1211,6 +1562,7 @@
   <a href="#sobre"      onclick="closeMobileNav()">Sobre</a>
   <a href="#pilares"    onclick="closeMobileNav()">Pilares</a>
   <a href="#governacao" onclick="closeMobileNav()">Estrutura</a>
+  <a href="#fundadores" onclick="closeMobileNav()">Equipa</a>
   <a href="#adesao"     onclick="closeMobileNav()">Aderir</a>
 </div>
 
@@ -1230,7 +1582,7 @@
   <div class="container">
     <div class="hero-content">
       <div class="hero-eyebrow reveal">
-        <span class="tag">Luanda, Angola · Fundado a 13 de Maio de 2025</span>
+        <span class="tag">Luanda, Angola · Fundado em 2025</span>
       </div>
       <h1 class="hero-title reveal" id="hero-title">
         Cresceste sem<br/>
@@ -1263,8 +1615,38 @@
     <div class="about-grid">
       <div class="about-visual reveal">
         <div class="about-img-wrap">
-          <div class="about-img-placeholder">
-           <img src="people.jpeg" alt="Membros do Canto da Engenharia numa atividade comunitária">
+          <div class="about-slideshow" id="about-slideshow">
+
+            <!-- SLIDE 1: substitui src pela tua imagem -->
+            <div class="slide active">
+              <img src="people.jpeg" alt="Movimento Juvenil Tecnológico">
+            </div>
+
+            <!-- SLIDE 2: substitui src pela tua imagem -->
+            <div class="slide">
+              <img src="people-02.jpeg" alt="">
+            </div>
+
+            <!-- SLIDE 3: substitui src pela tua imagem -->
+            <div class="slide">
+              <img src="people-03.png" alt="Máximo Empenho">
+            </div>
+
+            <!-- Setas -->
+            <button class="slide-prev" onclick="slideMove(-1)" aria-label="Imagem anterior">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button class="slide-next" onclick="slideMove(1)" aria-label="Próxima imagem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+
+            <!-- Dots -->
+            <div class="slide-dots">
+              <button class="slide-dot active" onclick="slideTo(0)" aria-label="Slide 1"></button>
+              <button class="slide-dot" onclick="slideTo(1)" aria-label="Slide 2"></button>
+              <button class="slide-dot" onclick="slideTo(2)" aria-label="Slide 3"></button>
+            </div>
+
           </div>
         </div>
         <div class="about-badge">
@@ -1428,48 +1810,313 @@
           <p>O núcleo estratégico do movimento. Garante que a visão se traduz em acção, que os recursos chegam onde são precisos e que o movimento cresce com integridade e governação clara.</p>
         </div>
       </div>
+      <!-- Comunicação & Marketing -->
       <div class="dept-card reveal">
         <div class="dept-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
           </svg>
         </div>
-        <h3>Marketing & Comunicação</h3>
-        <p>Conta a história do movimento. Redes sociais, cobertura de eventos, identidade visual e disseminação do conhecimento produzido.</p>
+        <h3>Comunicação &amp; Marketing</h3>
+        <p>Conta a história do movimento. Redes sociais, cobertura de eventos, identidade visual e disseminação do conhecimento produzido pelo C.E.</p>
       </div>
+
+      <!-- Gestão de Projetos & Formação -->
       <div class="dept-card reveal">
         <div class="dept-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 20h.01M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/>
+            <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
           </svg>
         </div>
-        <h3>Gestão de Projetos</h3>
-        <p>Planeia, executa e avalia os projetos comunitários. Define metodologias, gere equipas no terreno e garante impacto mensurável.</p>
+        <h3>Gestão de Projetos &amp; Formação e Capacitação</h3>
+        <p>Planeia, executa e avalia os projetos comunitários. Coordena as oficinas de formação e desenvolve a capacidade técnica dos membros.</p>
       </div>
-     <div class="dept-card reveal">
-  <div class="dept-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-      <circle cx="9" cy="7" r="4"></circle>
-      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-    </svg>
-  </div>
-  <h3>Parcerias & Recursos</h3>
-  <p>Constrói pontes com empresas, universidades e entidades. Mobiliza apoio técnico, material e financeiro.</p>
-</div>
 
-<div class="dept-card reveal">
-  <div class="dept-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="10"></circle>
-      <line x1="2" y1="12" x2="22" y2="12"></line>
-      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-    </svg>
+      <!-- Acção Social & Sustentabilidade -->
+      <div class="dept-card reveal">
+        <div class="dept-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <h3>Acção Social, Capacitação &amp; Sustentabilidade</h3>
+        <p>Interface directa com as comunidades. Identifica necessidades reais, acompanha o impacto e garante a sustentabilidade das intervenções.</p>
+      </div>
+
+      <!-- Administração & Finanças -->
+      <div class="dept-card reveal">
+        <div class="dept-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="5" width="20" height="14" rx="2"/>
+            <line x1="2" y1="10" x2="22" y2="10"/>
+          </svg>
+        </div>
+        <h3>Administração &amp; Finanças</h3>
+        <p>Gere os recursos financeiros com transparência. Assegura a integridade institucional, a contabilidade e o planeamento orçamental do movimento.</p>
+      </div>
+
+      <!-- Estratégias, Parcerias & Operações -->
+      <div class="dept-card reveal">
+        <div class="dept-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M2 12h3M19 12h3M12 2v3M12 19v3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>
+          </svg>
+        </div>
+        <h3>Estratégias, Parcerias &amp; Operações</h3>
+        <p>Constrói pontes com empresas, universidades e entidades. Define a visão estratégica e coordena as operações e recursos externos.</p>
+      </div>
+    </div>
   </div>
-  <h3>Acção Social</h3>
-  <p>Interface directa com as comunidades. Identifica necessidades reais e acompanha o impacto dos projetos.</p>
-</div>
+</section>
+
+<!-- ============================================================
+     FUNDADORES
+============================================================ -->
+<section id="fundadores" class="section">
+  <div class="container">
+
+    <!-- Cabeçalho -->
+    <div class="section-header reveal">
+      <div class="section-label"><span class="tag">Origens</span></div>
+      <h2 class="section-title">Os <span class="grad-text">Fundadores</span></h2>
+    </div>
+
+    <!-- Cards dos fundadores -->
+    <div class="founders-grid">
+
+      <!-- Fundador 1 — Tomé Gabriel -->
+      <div class="founder-card reveal">
+        <div class="founder-photo">
+          <img src="founder.jpeg" alt="">
+        </div>
+        <div class="founder-info">
+          <h3>Tomé Gabriel</h3>
+          <p class="founder-role">Co-Fundador &amp; Presidente</p>
+          <p class="founder-bio">
+            Visionário e motor do Canto da Engenharia desde a sua fundação em Maio de 2025.
+            Acredita que a engenharia só tem sentido quando resolve os problemas das pessoas reais —
+            não apenas os problemas dos livros. Lidera a missão de transformar Luanda num laboratório
+            vivo de inovação comunitária.
+          </p>
+          <div class="founder-tags">
+            <span class="founder-tag">Liderança</span>
+            <span class="founder-tag">Engenharia Civil</span>
+            <span class="founder-tag">Desenvolvimento Comunitário</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fundador 2 — Manuel Cassuada -->
+      <div class="founder-card reveal">
+        <img src="founder-02.png" alt="">
+        <div class="founder-info">
+          <h3>Manuel Cassuada</h3>
+          <p class="founder-role">Co-Fundador &amp; Director de Operações</p>
+          <p class="founder-bio">
+            Responsável por transformar ideias em acção concreta. Manuel assegura que cada projecto
+            do C.E. sai do papel e chega às comunidades com impacto real e mensurável. A sua
+            experiência em gestão de projectos é o alicerce operacional do movimento.
+          </p>
+          <div class="founder-tags">
+            <span class="founder-tag">Gestão de Projectos</span>
+            <span class="founder-tag">Operações</span>
+            <span class="founder-tag">Inovação Social</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Objectivo Principal -->
+    <div class="objetivo-banner reveal">
+      <div class="objetivo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <circle cx="12" cy="12" r="6"/>
+          <circle cx="12" cy="12" r="2"/>
+        </svg>
+      </div>
+      <div class="objetivo-text">
+        <p class="objetivo-label">Objectivo Principal</p>
+        <p>Promover a transformação social e comunitária através da Engenharia, aplicando-a à resolução de problemas reais e à construção de soluções concretas.</p>
+      </div>
+    </div>
+
+    <!-- Imagem de fundo da equipa -->
+    <div class="founders-bg-img reveal">
+      <img src="image.png" alt="">
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================
+     MEMBROS
+============================================================ -->
+<section id="membros" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label"><span class="tag">Comunidade</span></div>
+      <h2 class="section-title">Os nossos <span class="grad-text">Membros</span></h2>
+    </div>
+
+    <div class="membros-grid">
+
+      <!-- Ícone SVG reutilizável: perfil de pessoa -->
+      <!-- Adão Ginga -->
+      <div class="membro-card reveal">
+        <div class="membro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span class="membro-name">Adão Ginga</span>
+      </div>
+
+      <!-- Tetiano Silva -->
+      <div class="membro-card reveal">
+        <div class="membro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span class="membro-name">Tetiano Silva</span>
+      </div>
+
+      <!-- Simonal Munguengue -->
+      <div class="membro-card reveal">
+        <div class="membro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span class="membro-name">Simonal Munguengue</span>
+      </div>
+
+      <!-- Osvaldo Casseba -->
+      <div class="membro-card reveal">
+        <div class="membro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span class="membro-name">Osvaldo Casseba</span>
+      </div>
+
+      <!-- Alexandre Manguituca -->
+      <div class="membro-card reveal">
+        <div class="membro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span class="membro-name">Alexandre Manguituca</span>
+      </div>
+
+      <!-- Rosário Cassuada -->
+      <div class="membro-card reveal">
+        <div class="membro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span class="membro-name">Rosário Cassuada</span>
+      </div>
+
+      <!-- Francisco Quizunda -->
+      <div class="membro-card reveal">
+        <div class="membro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span class="membro-name">Francisco Quizunda</span>
+      </div>
+
+      <!-- Ricardo Dala -->
+      <div class="membro-card reveal">
+        <div class="membro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span class="membro-name">Ricardo Dala</span>
+      </div>
+
+      <!-- Tassira Kiala -->
+      <div class="membro-card reveal">
+        <div class="membro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span class="membro-name">Tassira Kiala</span>
+      </div>
+
+      <!-- Isabel António -->
+      <div class="membro-card reveal">
+        <div class="membro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span class="membro-name">Isabel António</span>
+      </div>
+
+      <!-- Sofia Manuel -->
+      <div class="membro-card reveal">
+        <div class="membro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span class="membro-name">Sofia Manuel</span>
+      </div>
+
+      <!-- Lurdes Albertina -->
+      <div class="membro-card reveal">
+        <div class="membro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span class="membro-name">Lurdes Albertina</span>
+      </div>
+
+      <!-- Chiwela Martins -->
+      <div class="membro-card reveal">
+        <div class="membro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span class="membro-name">Chiwela Martins</span>
+      </div>
+
+      <!-- Cristiano Filho -->
+      <div class="membro-card reveal">
+        <div class="membro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span class="membro-name">Cristiano Filho</span>
+      </div>
+
+      <!-- Jorge Tanguila -->
+      <div class="membro-card reveal">
+        <div class="membro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span class="membro-name">Jorge Tanguila</span>
+      </div>
+
     </div>
   </div>
 </section>
@@ -2019,6 +2666,39 @@ function initAnime() {
   // API pública, caso seja necessário invocar de outro ponto do site
   window.openTermsModal  = openModal;
   window.closeTermsModal = closeModal;
+})();
+
+
+/* ---- SLIDESHOW ---- */
+(function() {
+  const slides = document.querySelectorAll('#about-slideshow .slide');
+  const dots   = document.querySelectorAll('#about-slideshow .slide-dot');
+  if (!slides.length) return;
+
+  let current = 0;
+  let timer;
+
+  function slideTo(n) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+    resetTimer();
+  }
+
+  function slideMove(dir) { slideTo(current + dir); }
+
+  function resetTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => slideTo(current + 1), 4500);
+  }
+
+  // Expose globally for inline onclick
+  window.slideTo   = slideTo;
+  window.slideMove = slideMove;
+
+  resetTimer();
 })();
 
 /* ---- Reduced motion ---- */
